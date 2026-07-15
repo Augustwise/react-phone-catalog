@@ -20,12 +20,19 @@ body {
   background-color: var(--color-page-bg);
 }
 
+::view-transition-old(root),
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+  animation-duration: 0.35s;
+  animation-timing-function: ease;
+}
+
 img[src$='.svg']:not(
-  [data-no-dark-filter='true'],
-  [src*='heart_active.svg'],
-  [src*='Logo.svg'],
-  [src*='Logo_dark.svg']
-) {
+    [data-no-dark-filter='true'],
+    [src*='heart_active.svg'],
+    [src*='Logo.svg'],
+    [src*='Logo_dark.svg']
+  ) {
   filter: var(--svg-icon-filter);
 }
 

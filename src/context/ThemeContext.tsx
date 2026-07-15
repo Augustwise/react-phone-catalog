@@ -6,6 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import { flushSync } from 'react-dom';
 
 type Theme = 'light' | 'dark';
 
@@ -47,7 +48,27 @@ export const ThemeProvider = ({ children }: Props) => {
     () => ({
       theme,
       toggleTheme: () => {
-        setTheme(currentTheme => (currentTheme === 'light' ? 'dark' : 'light'));
+        const nextTheme = theme === 'light' ? 'dark' : 'light';
+
+        const applyTheme = () => {
+          flushSync(() => {
+            document.documentElement.setAttribute('data-theme', nextTheme);
+            setTheme(nextTheme);
+          });
+        };
+
+        const prefersReducedMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches;
+
+        if (
+          typeof document.startViewTransition === 'function' &&
+          !prefersReducedMotion
+        ) {
+          document.startViewTransition(applyTheme);
+        } else {
+          applyTheme();
+        }
       },
     }),
     [theme],
