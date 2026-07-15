@@ -8,6 +8,10 @@ export const LANGUAGE_STORAGE_KEY = 'language';
 type Language = 'en' | 'ua';
 
 const getInitialLanguage = (): Language => {
+  if (typeof localStorage === 'undefined') {
+    return 'en';
+  }
+
   const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
 
   if (saved === 'en' || saved === 'ua') {
@@ -36,7 +40,9 @@ i18n.use(initReactI18next).init({
 });
 
 i18n.on('languageChanged', lng => {
-  localStorage.setItem(LANGUAGE_STORAGE_KEY, lng);
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, lng);
+  }
 });
 
 export default i18n;

@@ -6,6 +6,8 @@ import { CartItem } from '../../components/CartItem';
 import { useCart } from '../../context/CartContext';
 import styles from './CartPage.module.scss';
 
+Modal.setAppElement('#root');
+
 export const CartPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();

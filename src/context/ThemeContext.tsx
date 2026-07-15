@@ -17,6 +17,10 @@ type ThemeContextValue = {
 const THEME_STORAGE_KEY = 'theme';
 
 const getInitialTheme = (): Theme => {
+  if (typeof localStorage === 'undefined') {
+    return 'light';
+  }
+
   const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
 
   return savedTheme === 'dark' ? 'dark' : 'light';

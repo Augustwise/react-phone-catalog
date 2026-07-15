@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
+import uaFlag from 'flag-icons/flags/4x3/ua.svg';
+import usFlag from 'flag-icons/flags/4x3/us.svg';
 import styles from './LanguageSelect.module.scss';
 
 type Language = 'en' | 'ua';
@@ -10,8 +12,8 @@ type Props = {
 };
 
 const LANGUAGES = [
-  { value: 'ua' as Language, label: 'Ukrainian', flagClassName: 'fi-ua' },
-  { value: 'en' as Language, label: 'English', flagClassName: 'fi-us' },
+  { value: 'ua' as Language, label: 'Ukrainian', flag: uaFlag },
+  { value: 'en' as Language, label: 'English', flag: usFlag },
 ];
 
 export const LanguageSelect = ({ value, onChange }: Props) => {
@@ -66,12 +68,11 @@ export const LanguageSelect = ({ value, onChange }: Props) => {
         className={styles.trigger}
         onClick={handleToggleMenu}
       >
-        <span
-          className={classNames(
-            'fi',
-            currentLanguage.flagClassName,
-            styles.flag,
-          )}
+        <img
+          src={currentLanguage.flag}
+          alt={currentLanguage.label}
+          className={styles.flag}
+          data-no-dark-filter="true"
         />
       </button>
 
@@ -89,12 +90,11 @@ export const LanguageSelect = ({ value, onChange }: Props) => {
                 })}
                 onClick={() => handleSelectLanguage(language.value)}
               >
-                <span
-                  className={classNames(
-                    'fi',
-                    language.flagClassName,
-                    styles.flag,
-                  )}
+                <img
+                  src={language.flag}
+                  alt={language.label}
+                  className={styles.flag}
+                  data-no-dark-filter="true"
                 />
                 <span className={styles.optionLabel}>{language.label}</span>
               </button>
