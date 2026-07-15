@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync, existsSync, rmSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 process.env.NODE_ENV = 'production';
 
@@ -14,7 +14,7 @@ if (!entry) {
   throw new Error('SSR bundle not found, run vite build --ssr first');
 }
 
-const { render } = await import(entry);
+const { render } = await import(pathToFileURL(entry).href);
 
 let appHtml = render();
 
